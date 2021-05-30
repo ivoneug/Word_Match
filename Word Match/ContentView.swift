@@ -52,6 +52,7 @@ struct ContentView: View {
     private func renderGrid(size: CGSize) -> some View {
         let width = size.width
         var height = size.width
+        var gridItemWidth = width / 4
         
         let rowCount = ceil(Double(viewModel.letters.count) / 3)
         if rowCount != 3 {
@@ -59,18 +60,22 @@ struct ContentView: View {
         }
         if viewModel.letters.count <= 4 {
             height = width
+            gridItemWidth = width / 3
         }
         
-        return Grid(viewModel.letters) { letter in
-            LetterView(letter: letter)
-            .onTapGesture {
-                withAnimation(Animation.linear) {
-                    viewModel.select(letter: letter)
+        return LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemWidth))], content: {
+            ForEach(viewModel.letters) { letter in
+                LetterView(letter: letter)
+                .onTapGesture {
+                    withAnimation(Animation.linear) {
+                        viewModel.select(letter: letter)
+                    }
                 }
+                .foregroundColor(Color.green)
+                .padding(cardPadding)
+                    .aspectRatio(contentMode: .fill)
             }
-            .foregroundColor(Color.green)
-            .padding(cardPadding)
-        }
+        })
         .padding(10)
         .frame(width: width, height: height, alignment: .center)
     }

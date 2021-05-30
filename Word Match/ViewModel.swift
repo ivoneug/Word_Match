@@ -8,6 +8,8 @@
 import Foundation
 
 let words = [
+    "pie",
+    "able",
     "hello",
     "table",
     "lasso",
@@ -22,7 +24,7 @@ class ViewModel: ObservableObject {
     
     private static func createModel() -> Model {
         let word: String = words[Int.random(in: 0..<words.count)]
-        return Model(letters: word.map{ String($0) })
+        return Model(words: words, columns: 3)
     }
     
     // MARK: - Accessors
