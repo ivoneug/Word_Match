@@ -7,6 +7,8 @@
 
 import Foundation
 
+let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 struct Model {
     enum DirectionType {
         case horizontalForward
@@ -16,122 +18,151 @@ struct Model {
     }
     
     let columns: Int
+    let rows: Int
+    
     var words = [Word]()
     var selectedWords = [Word]()
-    var vacantLetterIndexes = [Int]()
-    
-    var letters: [Letter] {
-        var arr = [Letter]()
-        
-        for index in 0..<selectedWords.count {
-            let word = selectedWords[index]
-            for letterIndex in 0..<word.letters.count {
-                arr.append(word.letters[letterIndex])
-            }
-        }
-        
-        arr.sort { x, y in x.id < y.id }
-        return arr
-    }
+    var emptyIndexes = [Int]()
+    var letters = [Letter]()
     
     init(words: [String], columns: Int) {
         self.columns = columns
+        self.rows = columns
         
         for index in 0..<words.count {
             let word = Word(word: words[index])
             self.words.append(word);
         }
         
-        self.words.shuffle()
+        prepare()
+        generate()
+    }
+    
+    private mutating func prepare() {
+        letters.removeAll()
+        emptyIndexes.removeAll()
         
-        for index in 0..<columns * columns {
-            vacantLetterIndexes.append(index)
+        words.shuffle()
+        
+        for index in 0..<self.columns * self.rows {
+            letters.append(Letter())
+            emptyIndexes.append(index)
         }
         
-        for index in 0..<self.words.count {
-            if vacantLetterIndexes.count == 0 {
-                return
-            }
+        emptyIndexes.shuffle()
+    }
+    
+    private mutating func generate() {
+        var directions: [DirectionType] = [
+            .horizontalBackward,
+            .horizontalForward,
+            .verticalBackward,
+            .verticalForward
+        ]
+        
+        for word in words {
+            directions.shuffle()
+            emptyIndexes.shuffle()
             
-            for letterIndex in 0..<self.words[index].letters.count {
-                if let idx = nextLetterIndex(word: self.words[index], wordLetterIndex: letterIndex) {
-                    self.words[index].letters[letterIndex].id = idx
-                    vacantLetterIndexes.remove(at: vacantLetterIndexes.firstIndex(of: idx)!)
-                } else {
-                    self.words[index].clear()
-                    break
+            for direction in directions {
+                var index: Int?
+                var indexes = [Int]()
+                
+                for letterIndex in 0..<word.letters.count {
+                    let letter = word.letters[letterIndex]
+                    
+                    if letterIndex == 0 {
+                        index = emptyIndexes.first
+                    } else {
+                        index = nextIndex(prevIndex: index!, direction: direction)
+                    }
+                    if let exactIndex = index {
+                        indexes.append(exactIndex)
+                        
+                        letters[exactIndex] = letter
+                        letters[exactIndex].id = exactIndex
+                    } else {
+                        clearLettersAtIndexes(indexes: indexes)
+                        indexes.removeAll()
+                        break
+                    }
                 }
                 
-                if letterIndex == self.words[index].letters.count - 1 {
-                    selectedWords.append(self.words[index])
+                for index in indexes {
+                    for idx in 0..<emptyIndexes.count {
+                        if emptyIndexes[idx] == index {
+                            emptyIndexes.remove(at: idx)
+                            break
+                        }
+                    }
                 }
             }
         }
+        
+        for index in emptyIndexes {
+            var letter = Letter()
+            letter.name = alphabet[Int.random(in: 0..<alphabet.count)]
+            letter.id = index
+            
+            letters[index] = letter
+        }
+    }
+    
+    private mutating func clearLettersAtIndexes(indexes: [Int]) {
+        for index in indexes {
+            letters[index].clear()
+        }
+    }
+    
+    private func letterGet(column: Int, row: Int) -> Letter {
+        letters[row * columns + column]
+    }
+    
+    private mutating func letterSet(column: Int, row: Int, letter: Letter) -> Int {
+        letters[row * columns + column] = letter
+        letters[row * columns + column].id = row * columns + column
+        
+        return row * columns + column
     }
     
     mutating func select(letter: Letter) {
-        for index in 0..<selectedWords.count {
-            for letterIndex in 0..<selectedWords[index].letters.count {
-                if letter.id != selectedWords[index].letters[letterIndex].id {
-                    continue
-                }
-                
-                selectedWords[index].letters[letterIndex].isSelected = !selectedWords[index].letters[letterIndex].isSelected
-            }
+        if letter.isMatched {
+            return
         }
+        
+        letters[letter.id].isSelected = !letters[letter.id].isSelected
+        
+        checkForMatch(letter: letter)
     }
     
-    private mutating func nextLetterIndex(word: Word, wordLetterIndex: Int) -> Int? {
-        let letter = word.letters[wordLetterIndex]
-        if letter.isAssigned {
-            return letter.id
-        }
+    private mutating func checkForMatch(letter: Letter) {
+        let totalCount = letter.word.count
+        var count = 0
+        var wordIndexes = [Int]()
         
-        var prevLetterIndex = -1
-        
-        if wordLetterIndex == 0 {
-            prevLetterIndex = vacantLetterIndexes.randomElement()!
-        } else {
-            prevLetterIndex = word.letters[wordLetterIndex - 1].id
-        }
-        
-        var attempt = 0
-        
-        while true {
-            attempt += 1
-            if attempt > 500 {
-                break
-            }
-            
-            let rnd = Int.random(in: 0...3)
-            var direction: DirectionType
-            
-            switch rnd {
-            case 0:
-                direction = .horizontalForward
-            case 1:
-                direction = .horizontalBackward
-            case 2:
-                direction = .verticalForward
-            case 3:
-                direction = .verticalBackward
-            default:
-                continue
-            }
-            
-            if let nextVacantIndex = nextIndex(prevIndex: prevLetterIndex, direction: direction) {
-                return nextVacantIndex
+        for index in 0..<letters.count {
+            let currentLetter = letters[index]
+            if (currentLetter.word == letter.word) {
+                wordIndexes.append(index)
+                
+                if (currentLetter.isSelected) {
+                    count += 1
+                }
             }
         }
         
-        return nil
+        if count == totalCount {
+            for index in wordIndexes {
+                letters[index].isMatched = true
+            }
+        }
     }
     
     private mutating func nextIndex(prevIndex: Int, direction: DirectionType) -> Int? {
-        let hUpper = Int(ceil(Double(prevIndex) / Double(columns))) * columns
-        let hLower = Int(floor(Double(prevIndex) / Double(columns))) * columns
+        let hUpper = Int(ceil(Double(prevIndex + 1) / Double(columns))) * columns
+        let hLower = Int(floor(Double(prevIndex + 1) / Double(columns))) * columns
         
-        let vUpper = columns * columns
+        let vUpper = columns * rows
         let vLower = 0
         
         var index: Int?
@@ -155,38 +186,17 @@ struct Model {
             }
         }
         
-        if index != nil && vacantLetterIndexes.firstIndex(of: index!) != nil {
+        if index != nil && emptyIndexes.firstIndex(of: index!) != nil {
             return index
         }
         
         return nil
     }
     
-//    private mutating func vacantLetterIndexes() -> [Int] {
-//        var indexes = [Int]()
-//        for index in 0..<columns * columns {
-//            indexes.append(index)
-//        }
-//
-//        for wordIndex in 0..<selectedWords.count {
-//            let word = selectedWords[wordIndex]
-//
-//            for letterIndex in 0..<word.letters.count {
-//                let letter = word.letters[letterIndex]
-//
-//                if (letter.isAssigned) {
-//                    indexes.remove(at: indexes.firstIndex(of: letter.id)!)
-//                    selectedWords[wordIndex].letters[letterIndex].clear()
-//                }
-//            }
-//        }
-//
-//        return indexes
-//    }
-    
     struct Letter: Identifiable {
         var id: Int
         var name: String
+        var word: String
         var isSelected: Bool = false
         var isMatched: Bool = false
         
@@ -194,8 +204,20 @@ struct Model {
             id != -1
         }
         
+        var isEmpty: Bool {
+            return id == -1 && name == "" && word == ""
+        }
+        
         mutating func clear() {
             id = -1
+            name = ""
+            word = ""
+        }
+        
+        init() {
+            id = -1
+            name = ""
+            word = ""
         }
     }
     
@@ -218,7 +240,10 @@ struct Model {
         init(word: String) {
             let letters = word.map{ String($0) };
             for index in 0..<word.count {
-                self.letters.append(Letter(id: -1, name: letters[index]))
+                var letter = Letter()
+                letter.name = letters[index]
+                letter.word = word
+                self.letters.append(letter)
             }
         }
         

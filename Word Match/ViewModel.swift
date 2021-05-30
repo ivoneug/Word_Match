@@ -16,7 +16,18 @@ let words = [
     "wonderful",
     "blue",
     "rocket",
-    "science"
+    "science",
+    "class",
+    "information",
+    "blue",
+    "tradition",
+    "handle",
+    "virus",
+    "locomotive",
+    "car",
+    "tree",
+    "tradition",
+    "decimal"
 ]
 
 class ViewModel: ObservableObject {
@@ -24,10 +35,14 @@ class ViewModel: ObservableObject {
     
     private static func createModel() -> Model {
         let word: String = words[Int.random(in: 0..<words.count)]
-        return Model(words: words, columns: 3)
+        return Model(words: words, columns: 5)
     }
     
     // MARK: - Accessors
+    
+    var columns: Int {
+        model.columns
+    }
     
     var letters: [Model.Letter] {
         model.letters

@@ -52,15 +52,15 @@ struct ContentView: View {
     private func renderGrid(size: CGSize) -> some View {
         let width = size.width
         var height = size.width
-        var gridItemWidth = width / 4
+        var gridItemWidth = width / CGFloat(viewModel.columns + 1)
         
-        let rowCount = ceil(Double(viewModel.letters.count) / 3)
-        if rowCount != 3 {
-            height = height / 3 * CGFloat(rowCount)
+        let rowCount = Int(ceil(Double(viewModel.letters.count) / Double(viewModel.columns)))
+        if rowCount != viewModel.columns {
+            height = height / CGFloat(viewModel.columns) * CGFloat(rowCount)
         }
-        if viewModel.letters.count <= 4 {
+        if viewModel.letters.count <= (viewModel.columns + 1) {
             height = width
-            gridItemWidth = width / 3
+            gridItemWidth = width / CGFloat(viewModel.columns)
         }
         
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemWidth))], content: {

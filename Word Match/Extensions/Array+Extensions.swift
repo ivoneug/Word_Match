@@ -8,13 +8,20 @@
 import Foundation
 
 extension Array where Element: Identifiable {
-    func firstIndex(matching: Element) -> Int? {
+    mutating func removeFirstItem(matching: Element) -> Element? {
+        var idx: Int?
+        
         for index in 0..<self.count {
             if (self[index].id == matching.id) {
-                return index
+                idx = index
+                break
             }
         }
         
-        return nil
+        if let index = idx {
+            return self.remove(at: index)
+        } else {
+            return nil
+        }
     }
 }
