@@ -69,8 +69,6 @@ struct Model {
                 var indexes = [Int]()
                 
                 for letterIndex in 0..<word.letters.count {
-                    let letter = word.letters[letterIndex]
-                    
                     if letterIndex == 0 {
                         index = emptyIndexes.first
                     } else {
@@ -78,23 +76,29 @@ struct Model {
                     }
                     if let exactIndex = index {
                         indexes.append(exactIndex)
-                        
-                        letters[exactIndex] = letter
-                        letters[exactIndex].id = exactIndex
                     } else {
-                        clearLettersAtIndexes(indexes: indexes)
                         indexes.removeAll()
                         break
                     }
                 }
                 
-                for index in indexes {
-                    for idx in 0..<emptyIndexes.count {
-                        if emptyIndexes[idx] == index {
-                            emptyIndexes.remove(at: idx)
-                            break
+                if indexes.count != 0 {
+                    for index in 0..<indexes.count {
+                        let exactIndex = indexes[index]
+
+                        letters[exactIndex] = word.letters[index]
+                        letters[exactIndex].id = exactIndex
+                        
+                        for idx in 0..<emptyIndexes.count {
+                            if emptyIndexes[idx] == exactIndex {
+                                emptyIndexes.remove(at: idx)
+                                break
+                            }
                         }
                     }
+                    
+                    // when we have places for all letters in the word - stop changing directions and try next word
+                    break
                 }
             }
         }
@@ -108,23 +112,6 @@ struct Model {
         }
     }
     
-    private mutating func clearLettersAtIndexes(indexes: [Int]) {
-        for index in indexes {
-            letters[index].clear()
-        }
-    }
-    
-    private func letterGet(column: Int, row: Int) -> Letter {
-        letters[row * columns + column]
-    }
-    
-    private mutating func letterSet(column: Int, row: Int, letter: Letter) -> Int {
-        letters[row * columns + column] = letter
-        letters[row * columns + column].id = row * columns + column
-        
-        return row * columns + column
-    }
-    
     mutating func select(letter: Letter) {
         if letter.isMatched {
             return
@@ -136,6 +123,10 @@ struct Model {
     }
     
     private mutating func checkForMatch(letter: Letter) {
+        if letter.isFake {
+            return
+        }
+        
         let totalCount = letter.word.count
         var count = 0
         var wordIndexes = [Int]()
@@ -195,7 +186,11 @@ struct Model {
     
     struct Letter: Identifiable {
         var id: Int
-        var name: String
+        var name: String {
+            didSet {
+                name = name.uppercased()
+            }
+        }
         var word: String
         var isSelected: Bool = false
         var isMatched: Bool = false
@@ -207,11 +202,16 @@ struct Model {
         var isEmpty: Bool {
             return id == -1 && name == "" && word == ""
         }
+        var isFake: Bool {
+            word.isEmpty
+        }
         
         mutating func clear() {
             id = -1
             name = ""
             word = ""
+            isSelected = false
+            isMatched = false
         }
         
         init() {
