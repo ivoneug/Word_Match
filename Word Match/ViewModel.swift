@@ -19,14 +19,12 @@ let words = [
     "science",
     "class",
     "information",
-    "blue",
     "tradition",
     "handle",
     "virus",
     "locomotive",
     "car",
     "tree",
-    "tradition",
     "decimal"
 ]
 
