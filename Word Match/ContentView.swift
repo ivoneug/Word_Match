@@ -71,7 +71,6 @@ struct ContentView: View {
                         viewModel.select(letter: letter)
                     }
                 }
-                .foregroundColor(Color.green)
                 .padding(cardPadding)
                     .aspectRatio(contentMode: .fill)
             }
@@ -111,6 +110,7 @@ struct LetterView: View {
         }
         .font(Font.system(size: fontSize(for: size)))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(letter.isMatched ? .green : .black)
     }
     
     private func fontSize(for size: CGSize) -> CGFloat {
