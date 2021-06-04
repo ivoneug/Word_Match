@@ -5,7 +5,6 @@
 //  Created by Evgeniy on 01.05.2021.
 //
 
-import Foundation
 import SwiftUI
 
 let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -100,7 +99,7 @@ struct Model {
                     if colorIndex >= colors.count {
                         colorIndex = 0
                     }
-                    var color = colors[colorIndex]
+                    let color = colors[colorIndex]
                     
                     for index in 0..<indexes.count {
                         let exactIndex = indexes[index]

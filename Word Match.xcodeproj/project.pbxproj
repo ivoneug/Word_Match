@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD0BE548266A8BC40088CD69 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE547266A8BC40088CD69 /* LetterView.swift */; };
 		FD97AE17263D4E48009DF436 /* Word_MatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */; };
 		FD97AE19263D4E48009DF436 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE18263D4E48009DF436 /* ContentView.swift */; };
 		FD97AE1B263D4E4F009DF436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD97AE1A263D4E4F009DF436 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FD0BE547266A8BC40088CD69 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		FD97AE13263D4E48009DF436 /* Word Match.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Match.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word_MatchApp.swift; sourceTree = "<group>"; };
 		FD97AE18263D4E48009DF436 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				FD97AE1A263D4E4F009DF436 /* Assets.xcassets */,
 				FD97AE1F263D4E4F009DF436 /* Info.plist */,
 				FD97AE1C263D4E4F009DF436 /* Preview Content */,
+				FD0BE547266A8BC40088CD69 /* LetterView.swift */,
 			);
 			path = "Word Match";
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD0BE548266A8BC40088CD69 /* LetterView.swift in Sources */,
 				FD97AE34263D4F93009DF436 /* Model.swift in Sources */,
 				FD97AE31263D4F2B009DF436 /* Pie.swift in Sources */,
 				FD97AE30263D4F2B009DF436 /* Array+Extensions.swift in Sources */,
