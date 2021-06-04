@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import SwiftUI
 
 let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+let colors = [
+    Color.green,
+    Color.blue,
+    Color.orange,
+    Color.pink,
+    Color.purple,
+    Color.red,
+    Color.yellow
+]
 
 struct Model {
     enum DirectionType {
@@ -60,6 +71,8 @@ struct Model {
             .verticalForward
         ]
         
+        var colorIndex = -1
+        
         for word in words {
             directions.shuffle()
             emptyIndexes.shuffle()
@@ -83,11 +96,18 @@ struct Model {
                 }
                 
                 if indexes.count != 0 {
+                    colorIndex += 1
+                    if colorIndex >= colors.count {
+                        colorIndex = 0
+                    }
+                    var color = colors[colorIndex]
+                    
                     for index in 0..<indexes.count {
                         let exactIndex = indexes[index]
 
                         letters[exactIndex] = word.letters[index]
                         letters[exactIndex].id = exactIndex
+                        letters[exactIndex].color = color
                         
                         for idx in 0..<emptyIndexes.count {
                             if emptyIndexes[idx] == exactIndex {
@@ -192,6 +212,7 @@ struct Model {
             }
         }
         var word: String
+        var color: Color
         var isSelected: Bool = false
         var isMatched: Bool = false
         
@@ -210,6 +231,7 @@ struct Model {
             id = -1
             name = ""
             word = ""
+            color = Color.black
             isSelected = false
             isMatched = false
         }
@@ -218,6 +240,7 @@ struct Model {
             id = -1
             name = ""
             word = ""
+            color = Color.black
         }
     }
     

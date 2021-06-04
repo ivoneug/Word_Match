@@ -110,7 +110,7 @@ struct LetterView: View {
         }
         .font(Font.system(size: fontSize(for: size)))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(letter.isMatched ? .green : .black)
+        .foregroundColor(letter.isMatched ? letter.color : .black)
     }
     
     private func fontSize(for size: CGSize) -> CGFloat {
