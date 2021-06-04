@@ -55,4 +55,8 @@ class ViewModel: ObservableObject {
     func select(letter: Model.Letter) {
         model.select(letter: letter)
     }
+    
+    func revealResults() {
+        model.revealResults()
+    }
 }

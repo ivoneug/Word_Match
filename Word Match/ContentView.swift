@@ -13,25 +13,35 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Spacer(minLength: topSpace)
-            HStack() {
-                Text("Score: \(0)")
-                    .frame(maxWidth: .infinity)
-                Text("Find Word")
-                    .frame(maxWidth: .infinity)
-                    .font(Font.title2)
-                Button(action: {
-                    withAnimation(Animation.easeInOut) {
-                        viewModel.createGame()
-                    }
-                }) {
-                    Text("New Game")
-                }
-                .frame(maxWidth: .infinity)
-            }
+            renderHeader()
             Spacer(minLength: space)
             renderTips()
             Spacer(minLength: space)
             renderGameField()
+        }
+    }
+    
+    private func renderHeader() -> some View {
+        HStack() {
+            Button(action: {
+                withAnimation(Animation.easeInOut) {
+                    viewModel.revealResults()
+                }
+            }) {
+                Text("Reveal")
+            }
+            .frame(maxWidth: .infinity)
+            Text("Find Word")
+                .frame(maxWidth: .infinity)
+                .font(Font.title2)
+            Button(action: {
+                withAnimation(Animation.easeInOut) {
+                    viewModel.createGame()
+                }
+            }) {
+                Text("New Game")
+            }
+            .frame(maxWidth: .infinity)
         }
     }
     

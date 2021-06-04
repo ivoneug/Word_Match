@@ -76,49 +76,65 @@ struct Model {
             directions.shuffle()
             emptyIndexes.shuffle()
             
-            for direction in directions {
-                var index: Int?
-                var indexes = [Int]()
-                
-                for letterIndex in 0..<word.letters.count {
-                    if letterIndex == 0 {
-                        index = emptyIndexes.first
-                    } else {
-                        index = nextIndex(prevIndex: index!, direction: direction)
-                    }
-                    if let exactIndex = index {
+            var index: Int?
+            var prevIndex: Int = -1
+            var indexes = [Int]()
+            var letterIndex = 0
+            var directionIndex = 0
+            
+            while letterIndex < word.letters.count {
+                if letterIndex == 0 {
+                    index = emptyIndexes.first
+                } else {
+                    index = nextIndex(prevIndex: index!, direction: directions[directionIndex])
+                }
+                if let exactIndex = index {
+                    // make sure that our newvly found index has not been already found :)
+                    if indexes.firstIndex(of: exactIndex) == nil {
                         indexes.append(exactIndex)
-                    } else {
-                        indexes.removeAll()
-                        break
+                        prevIndex = exactIndex
+                        
+                        letterIndex += 1
+                        continue
                     }
                 }
                 
-                if indexes.count != 0 {
-                    colorIndex += 1
-                    if colorIndex >= colors.count {
-                        colorIndex = 0
-                    }
-                    let color = colors[colorIndex]
-                    
-                    for index in 0..<indexes.count {
-                        let exactIndex = indexes[index]
-
-                        letters[exactIndex] = word.letters[index]
-                        letters[exactIndex].id = exactIndex
-                        letters[exactIndex].color = color
-                        
-                        for idx in 0..<emptyIndexes.count {
-                            if emptyIndexes[idx] == exactIndex {
-                                emptyIndexes.remove(at: idx)
-                                break
-                            }
-                        }
-                    }
-                    
-                    // when we have places for all letters in the word - stop changing directions and try next word
+                directionIndex += 1
+                
+                assert(prevIndex != -1)
+                index = prevIndex
+                
+                if directionIndex >= directions.count {
+                    indexes.removeAll()
                     break
                 }
+            }
+            
+            if indexes.count != 0 {
+                colorIndex += 1
+                if colorIndex >= colors.count {
+                    colorIndex = 0
+                }
+                let color = colors[colorIndex]
+                
+                for index in 0..<indexes.count {
+                    let exactIndex = indexes[index]
+
+                    letters[exactIndex] = word.letters[index]
+                    letters[exactIndex].id = exactIndex
+                    letters[exactIndex].color = color
+                    
+                    for idx in 0..<emptyIndexes.count {
+                        if emptyIndexes[idx] == exactIndex {
+                            emptyIndexes.remove(at: idx)
+                            break
+                        }
+                    }
+                }
+            }
+            
+            if emptyIndexes.count == 0 {
+                break
             }
         }
         
@@ -139,6 +155,17 @@ struct Model {
         letters[letter.id].isSelected = !letters[letter.id].isSelected
         
         checkForMatch(letter: letter)
+    }
+    
+    mutating func revealResults() {
+        for index in 0..<letters.count {
+            if letters[index].isFake {
+                continue
+            }
+            
+            letters[index].isSelected = true
+            letters[index].isMatched = true
+        }
     }
     
     private mutating func checkForMatch(letter: Letter) {
