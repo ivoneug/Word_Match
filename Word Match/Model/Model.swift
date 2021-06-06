@@ -9,6 +9,27 @@ import SwiftUI
 
 let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
+let wordList: [Word] = [
+    Word(name: "pie", description: "Nice and tasty cake"),
+    Word(name: "able", description: "When you can do something then you are *** to do it"),
+    Word(name: "hello", description: "A word to greet to someone"),
+    Word(name: "table", description: "A piece of furniture which can hold something"),
+    Word(name: "lasso", description: "A lasso description"),
+    Word(name: "wonderful", description: "A wonderful description"),
+    Word(name: "blue", description: "A blue description"),
+    Word(name: "rocket", description: "A rocket description"),
+    Word(name: "science", description: "A science description"),
+    Word(name: "class", description: "A class description"),
+    Word(name: "information", description: "An information description"),
+    Word(name: "tradition", description: "A tradition description"),
+    Word(name: "handle", description: "A handle description"),
+    Word(name: "virus", description: "A virus description"),
+    Word(name: "locomotive", description: "A locomotive description"),
+    Word(name: "car", description: "A car description"),
+    Word(name: "tree", description: "A tree description"),
+    Word(name: "decimal", description: "A decimal description")
+]
+
 let colors = [
     Color.green,
     Color.blue,
@@ -30,19 +51,15 @@ struct Model {
     let columns: Int
     let rows: Int
     
-    var words = [Word]()
+    private var words = [Word]()
     var selectedWords = [Word]()
     var emptyIndexes = [Int]()
     var letters = [Letter]()
     
-    init(words: [String], columns: Int) {
+    init(columns: Int) {
         self.columns = columns
         self.rows = columns
-        
-        for index in 0..<words.count {
-            let word = Word(word: words[index])
-            self.words.append(word);
-        }
+        self.words.append(contentsOf: wordList)
         
         prepare()
         generate()
@@ -72,7 +89,7 @@ struct Model {
         
         var colorIndex = -1
         
-        for word in words {
+        for var word in words {
             directions.shuffle()
             emptyIndexes.shuffle()
             
@@ -82,7 +99,9 @@ struct Model {
             var letterIndex = 0
             var directionIndex = 0
             
-            while letterIndex < word.letters.count {
+            let wordLetters = word.name.map{ String($0) }
+            
+            while letterIndex < wordLetters.count {
                 if letterIndex == 0 {
                     index = emptyIndexes.first
                 } else {
@@ -117,10 +136,14 @@ struct Model {
                 }
                 let color = colors[colorIndex]
                 
+                word.color = color
+                selectedWords.append(word)
+                
                 for index in 0..<indexes.count {
                     let exactIndex = indexes[index]
 
-                    letters[exactIndex] = word.letters[index]
+                    let letter = Letter(name: wordLetters[index], word: word.name)
+                    letters[exactIndex] = letter
                     letters[exactIndex].id = exactIndex
                     letters[exactIndex].color = color
                     
@@ -192,6 +215,12 @@ struct Model {
             for index in wordIndexes {
                 letters[index].isMatched = true
             }
+            for index in 0..<selectedWords.count {
+                if selectedWords[index].name == letter.word {
+                    selectedWords[index].isMatched = true
+                    break
+                }
+            }
         }
     }
     
@@ -228,78 +257,5 @@ struct Model {
         }
         
         return nil
-    }
-    
-    struct Letter: Identifiable {
-        var id: Int
-        var name: String {
-            didSet {
-                name = name.uppercased()
-            }
-        }
-        var word: String
-        var color: Color
-        var isSelected: Bool = false
-        var isMatched: Bool = false
-        
-        var isAssigned: Bool {
-            id != -1
-        }
-        
-        var isEmpty: Bool {
-            return id == -1 && name == "" && word == ""
-        }
-        var isFake: Bool {
-            word.isEmpty
-        }
-        
-        mutating func clear() {
-            id = -1
-            name = ""
-            word = ""
-            color = Color.black
-            isSelected = false
-            isMatched = false
-        }
-        
-        init() {
-            id = -1
-            name = ""
-            word = ""
-            color = Color.black
-        }
-    }
-    
-    struct Word {
-        var letters = [Letter]()
-        var count: Int {
-            letters.count
-        }
-        var isMatched: Bool {
-            var selected = 0
-            for index in 0..<letters.count {
-                if (letters[index].isSelected) {
-                    selected += 1
-                }
-            }
-            
-            return selected == letters.count
-        }
-        
-        init(word: String) {
-            let letters = word.map{ String($0) };
-            for index in 0..<word.count {
-                var letter = Letter()
-                letter.name = letters[index]
-                letter.word = word
-                self.letters.append(letter)
-            }
-        }
-        
-        mutating func clear() {
-            for index in 0..<letters.count {
-                letters[index].clear()
-            }
-        }
     }
 }

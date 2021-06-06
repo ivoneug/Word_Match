@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LetterView: View {
-    var letter: Model.Letter
+    var letter: Letter
     
     var body: some View {
         GeometryReader { geometry in

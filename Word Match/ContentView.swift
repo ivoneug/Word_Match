@@ -11,13 +11,18 @@ struct ContentView: View {
     @ObservedObject private(set) var viewModel: ViewModel
     
     var body: some View {
-        VStack {
-            Spacer(minLength: topSpace)
-            renderHeader()
-            Spacer(minLength: space)
-            renderTips()
-            Spacer(minLength: space)
-            renderGameField()
+        ZStack {
+            Color.yellow
+                .opacity(0.3)
+                .ignoresSafeArea()
+            VStack {
+                Spacer(minLength: topSpace)
+                renderHeader()
+                Spacer(minLength: space)
+                renderTips()
+                Spacer(minLength: space)
+                renderGameField()
+            }
         }
     }
     
@@ -46,8 +51,24 @@ struct ContentView: View {
     }
     
     private func renderTips() -> some View {
-        Text("Tip 1")
-            .padding()
+        let color = viewModel.nextWordToSearch?.color ?? Color.gray
+        
+        return ZStack {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(color.opacity(0.75))
+//                .shadow(radius: 5, x: 0, y: 0)
+            if let word = viewModel.nextWordToSearch {
+                Text(word.description)
+                    .padding()
+            } else {
+                Text("No tips")
+                    .padding()
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: 120, alignment: .center)
+        .multilineTextAlignment(.center)
+        .foregroundColor(.white)
     }
     
     private func renderGameField() -> some View {

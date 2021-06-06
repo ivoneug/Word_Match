@@ -7,33 +7,11 @@
 
 import Foundation
 
-let words = [
-    "pie",
-    "able",
-    "hello",
-    "table",
-    "lasso",
-    "wonderful",
-    "blue",
-    "rocket",
-    "science",
-    "class",
-    "information",
-    "tradition",
-    "handle",
-    "virus",
-    "locomotive",
-    "car",
-    "tree",
-    "decimal"
-]
-
 class ViewModel: ObservableObject {
     @Published private var model: Model = createModel()
     
     private static func createModel() -> Model {
-        let word: String = words[Int.random(in: 0..<words.count)]
-        return Model(words: words, columns: 5)
+        return Model(columns: 5)
     }
     
     // MARK: - Accessors
@@ -42,8 +20,18 @@ class ViewModel: ObservableObject {
         model.columns
     }
     
-    var letters: [Model.Letter] {
+    var letters: [Letter] {
         model.letters
+    }
+    
+    var nextWordToSearch: Word? {
+        for word in model.selectedWords {
+            if !word.isMatched {
+                return word
+            }
+        }
+        
+        return nil
     }
     
     // MARK: - Intents
@@ -52,7 +40,7 @@ class ViewModel: ObservableObject {
         model = ViewModel.createModel()
     }
     
-    func select(letter: Model.Letter) {
+    func select(letter: Letter) {
         model.select(letter: letter)
     }
     
