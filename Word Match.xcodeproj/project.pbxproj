@@ -67,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				FD97AE18263D4E48009DF436 /* ContentView.swift */,
+				FD0BE547266A8BC40088CD69 /* LetterView.swift */,
 				FD0BE54F266CFDC10088CD69 /* Header.swift */,
 				FD0BE551266CFE8B0088CD69 /* Tips.swift */,
 				FD0BE553266CFF020088CD69 /* FinalScreen.swift */,
@@ -102,7 +103,6 @@
 				FD97AE1A263D4E4F009DF436 /* Assets.xcassets */,
 				FD97AE1F263D4E4F009DF436 /* Info.plist */,
 				FD97AE1C263D4E4F009DF436 /* Preview Content */,
-				FD0BE547266A8BC40088CD69 /* LetterView.swift */,
 			);
 			path = "Word Match";
 			sourceTree = "<group>";
