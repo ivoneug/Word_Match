@@ -14,7 +14,7 @@ struct Header: View {
         HStack() {
             Button(action: {
                 withAnimation(Animation.easeInOut) {
-                    viewModel.revealResults()
+                    viewModel.revealLetter()
                 }
             }) {
                 Image(systemName: "questionmark.diamond")

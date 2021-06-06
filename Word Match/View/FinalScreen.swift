@@ -19,7 +19,9 @@ struct FinalScreen: View {
                 Text("All Words are Matched!")
                     .font(Font.title.bold())
                 Button(action: {
-                    viewModel.createGame()
+                    withAnimation(Animation.easeInOut) {
+                        viewModel.createGame()
+                    }
                 }) {
                     Image(systemName: "arrow.triangle.2.circlepath")
                 }

@@ -25,13 +25,7 @@ class ViewModel: ObservableObject {
     }
     
     var nextWordToSearch: Word? {
-        for word in model.selectedWords {
-            if !word.isMatched {
-                return word
-            }
-        }
-        
-        return nil
+        return model.nextWordToSearch
     }
     
     var isMatched: Bool {
@@ -46,6 +40,10 @@ class ViewModel: ObservableObject {
     
     func select(letter: Letter) {
         model.select(letter: letter)
+    }
+    
+    func revealLetter() {
+        model.revealLetter()
     }
     
     func revealResults() {

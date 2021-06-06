@@ -56,6 +56,16 @@ struct Model {
     var emptyIndexes = [Int]()
     var letters = [Letter]()
     
+    var nextWordToSearch: Word? {
+        for word in selectedWords {
+            if !word.isMatched {
+                return word
+            }
+        }
+        
+        return nil
+    }
+    
     var isMatched: Bool {
         var count = 0
         
@@ -190,6 +200,25 @@ struct Model {
         letters[letter.id].isSelected = !letters[letter.id].isSelected
         
         checkForMatch(letter: letter)
+    }
+    
+    mutating func revealLetter() {
+        if let word = nextWordToSearch {
+            for letter in letters {
+                if letter.isFake {
+                    continue
+                }
+                if letter.word != word.name {
+                    continue
+                }
+                if letter.isSelected {
+                    continue
+                }
+                
+                select(letter: letter)
+                break
+            }
+        }
     }
     
     mutating func revealResults() {
