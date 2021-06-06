@@ -34,6 +34,10 @@ class ViewModel: ObservableObject {
         return nil
     }
     
+    var isMatched: Bool {
+        return model.isMatched
+    }
+    
     // MARK: - Intents
     
     func createGame() {

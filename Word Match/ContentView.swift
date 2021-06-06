@@ -23,6 +23,9 @@ struct ContentView: View {
                 Spacer(minLength: space)
                 renderGameField()
             }
+            if viewModel.isMatched {
+                renderFinalScreen()
+            }
         }
     }
     
@@ -33,21 +36,27 @@ struct ContentView: View {
                     viewModel.revealResults()
                 }
             }) {
-                Text("Reveal")
+                Image(systemName: "questionmark.diamond")
             }
-            .frame(maxWidth: .infinity)
-            Text("Find Word")
+            .font(Font.title)
+            .padding(20)
+            
+            Text("Find All Words")
                 .frame(maxWidth: .infinity)
-                .font(Font.title2)
+                .font(Font.title2.bold())
+                .frame(maxWidth: .infinity)
+            
             Button(action: {
                 withAnimation(Animation.easeInOut) {
                     viewModel.createGame()
                 }
             }) {
-                Text("New Game")
+                Image(systemName: "arrow.triangle.2.circlepath")
             }
-            .frame(maxWidth: .infinity)
+            .font(Font.title)
+            .padding(20)
         }
+        .foregroundColor(.black)
     }
     
     private func renderTips() -> some View {
@@ -110,6 +119,27 @@ struct ContentView: View {
         .frame(width: width, height: height, alignment: .center)
     }
     
+    private func renderFinalScreen() -> some View {
+        ZStack {
+            Color.white
+                .opacity(0.8)
+                .ignoresSafeArea()
+            VStack {
+                Text("All Words are Matched!")
+                    .font(Font.title.bold())
+                Button(action: {
+                    viewModel.createGame()
+                }) {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }
+                .font(Font.title)
+                .padding(25)
+            }
+        }
+        .frame(width: .infinity, height: .infinity, alignment: .center)
+        .foregroundColor(.black)
+    }
+    
     private let topSpace: CGFloat = 15.0
     private let space: CGFloat = 5.0
     private let cardPadding: CGFloat = 5.0
@@ -117,6 +147,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: ViewModel())
+        Group {
+            ContentView(viewModel: ViewModel())
+            ContentView(viewModel: ViewModel())
+                .previewDevice("iPhone 8")
+        }
     }
 }

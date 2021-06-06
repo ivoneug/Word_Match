@@ -56,6 +56,18 @@ struct Model {
     var emptyIndexes = [Int]()
     var letters = [Letter]()
     
+    var isMatched: Bool {
+        var count = 0
+        
+        for word in selectedWords {
+            if word.isMatched {
+                count += 1
+            }
+        }
+        
+        return count == selectedWords.count
+    }
+    
     init(columns: Int) {
         self.columns = columns
         self.rows = columns
@@ -188,6 +200,9 @@ struct Model {
             
             letters[index].isSelected = true
             letters[index].isMatched = true
+        }
+        for index in 0..<selectedWords.count {
+            selectedWords[index].isMatched = true
         }
     }
     
