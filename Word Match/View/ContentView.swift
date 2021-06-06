@@ -17,67 +17,16 @@ struct ContentView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer(minLength: topSpace)
-                renderHeader()
+                Header(viewModel: viewModel)
                 Spacer(minLength: space)
-                renderTips()
+                Tips(viewModel: viewModel)
                 Spacer(minLength: space)
                 renderGameField()
             }
             if viewModel.isMatched {
-                renderFinalScreen()
+                FinalScreen(viewModel: viewModel)
             }
         }
-    }
-    
-    private func renderHeader() -> some View {
-        HStack() {
-            Button(action: {
-                withAnimation(Animation.easeInOut) {
-                    viewModel.revealResults()
-                }
-            }) {
-                Image(systemName: "questionmark.diamond")
-            }
-            .font(Font.title)
-            .padding(20)
-            
-            Text("Find All Words")
-                .frame(maxWidth: .infinity)
-                .font(Font.title2.bold())
-                .frame(maxWidth: .infinity)
-            
-            Button(action: {
-                withAnimation(Animation.easeInOut) {
-                    viewModel.createGame()
-                }
-            }) {
-                Image(systemName: "arrow.triangle.2.circlepath")
-            }
-            .font(Font.title)
-            .padding(20)
-        }
-        .foregroundColor(.black)
-    }
-    
-    private func renderTips() -> some View {
-        let color = viewModel.nextWordToSearch?.color ?? Color.gray
-        
-        return ZStack {
-            RoundedRectangle(cornerRadius: 5)
-                .fill(color.opacity(0.75))
-//                .shadow(radius: 5, x: 0, y: 0)
-            if let word = viewModel.nextWordToSearch {
-                Text(word.description)
-                    .padding()
-            } else {
-                Text("No tips")
-                    .padding()
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: 120, alignment: .center)
-        .multilineTextAlignment(.center)
-        .foregroundColor(.white)
     }
     
     private func renderGameField() -> some View {
@@ -117,27 +66,6 @@ struct ContentView: View {
         })
         .padding(10)
         .frame(width: width, height: height, alignment: .center)
-    }
-    
-    private func renderFinalScreen() -> some View {
-        ZStack {
-            Color.white
-                .opacity(0.8)
-                .ignoresSafeArea()
-            VStack {
-                Text("All Words are Matched!")
-                    .font(Font.title.bold())
-                Button(action: {
-                    viewModel.createGame()
-                }) {
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                }
-                .font(Font.title)
-                .padding(25)
-            }
-        }
-        .frame(width: .infinity, height: .infinity, alignment: .center)
-        .foregroundColor(.black)
     }
     
     private let topSpace: CGFloat = 15.0

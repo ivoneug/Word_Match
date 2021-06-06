@@ -10,6 +10,9 @@
 		FD0BE548266A8BC40088CD69 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE547266A8BC40088CD69 /* LetterView.swift */; };
 		FD0BE54B266CF7BA0088CD69 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE54A266CF7BA0088CD69 /* Word.swift */; };
 		FD0BE54D266CF7DF0088CD69 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE54C266CF7DF0088CD69 /* Letter.swift */; };
+		FD0BE550266CFDC10088CD69 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE54F266CFDC10088CD69 /* Header.swift */; };
+		FD0BE552266CFE8B0088CD69 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE551266CFE8B0088CD69 /* Tips.swift */; };
+		FD0BE554266CFF020088CD69 /* FinalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE553266CFF020088CD69 /* FinalScreen.swift */; };
 		FD97AE17263D4E48009DF436 /* Word_MatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */; };
 		FD97AE19263D4E48009DF436 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE18263D4E48009DF436 /* ContentView.swift */; };
 		FD97AE1B263D4E4F009DF436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD97AE1A263D4E4F009DF436 /* Assets.xcassets */; };
@@ -24,6 +27,9 @@
 		FD0BE547266A8BC40088CD69 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
 		FD0BE54A266CF7BA0088CD69 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		FD0BE54C266CF7DF0088CD69 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		FD0BE54F266CFDC10088CD69 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		FD0BE551266CFE8B0088CD69 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
+		FD0BE553266CFF020088CD69 /* FinalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalScreen.swift; sourceTree = "<group>"; };
 		FD97AE13263D4E48009DF436 /* Word Match.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Match.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word_MatchApp.swift; sourceTree = "<group>"; };
 		FD97AE18263D4E48009DF436 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +63,17 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		FD0BE54E266CFDA70088CD69 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FD97AE18263D4E48009DF436 /* ContentView.swift */,
+				FD0BE54F266CFDC10088CD69 /* Header.swift */,
+				FD0BE551266CFE8B0088CD69 /* Tips.swift */,
+				FD0BE553266CFF020088CD69 /* FinalScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		FD97AE0A263D4E48009DF436 = {
 			isa = PBXGroup;
 			children = (
@@ -76,11 +93,11 @@
 		FD97AE15263D4E48009DF436 /* Word Match */ = {
 			isa = PBXGroup;
 			children = (
+				FD0BE54E266CFDA70088CD69 /* View */,
 				FD0BE549266CF7A80088CD69 /* Model */,
 				FD97AE2C263D4F2B009DF436 /* Extensions */,
 				FD97AE2E263D4F2B009DF436 /* Shapes */,
 				FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */,
-				FD97AE18263D4E48009DF436 /* ContentView.swift */,
 				FD97AE36263D4FA5009DF436 /* ViewModel.swift */,
 				FD97AE1A263D4E4F009DF436 /* Assets.xcassets */,
 				FD97AE1F263D4E4F009DF436 /* Info.plist */,
@@ -183,6 +200,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD0BE550266CFDC10088CD69 /* Header.swift in Sources */,
+				FD0BE552266CFE8B0088CD69 /* Tips.swift in Sources */,
 				FD0BE548266A8BC40088CD69 /* LetterView.swift in Sources */,
 				FD0BE54B266CF7BA0088CD69 /* Word.swift in Sources */,
 				FD97AE34263D4F93009DF436 /* Model.swift in Sources */,
@@ -191,6 +210,7 @@
 				FD97AE30263D4F2B009DF436 /* Array+Extensions.swift in Sources */,
 				FD97AE19263D4E48009DF436 /* ContentView.swift in Sources */,
 				FD97AE17263D4E48009DF436 /* Word_MatchApp.swift in Sources */,
+				FD0BE554266CFF020088CD69 /* FinalScreen.swift in Sources */,
 				FD97AE37263D4FA5009DF436 /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
