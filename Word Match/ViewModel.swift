@@ -7,19 +7,44 @@
 
 import Foundation
 
-var defaultColumnsCount = 5
-var maxColumnsCount = 8
-var minColumnsCount = 5
+let defaultColumnsCount = 5
+let maxColumnsCount = 8
+let minColumnsCount = 5
+
+struct GameSettings {
+    private static let kWordGridColumnsSize = "WordGridColumnsSize"
+    
+    var columns = defaultColumnsCount {
+        didSet {
+            UserDefaults.standard.setValue(columns, forKey: GameSettings.kWordGridColumnsSize)
+        }
+    }
+    
+    init() {
+        columns = UserDefaults.standard.integer(forKey: GameSettings.kWordGridColumnsSize)
+        if columns == 0 {
+            columns = defaultColumnsCount
+        }
+    }
+}
 
 class ViewModel: ObservableObject {
-    @Published private var model: Model = createModel(defaultColumnsCount)
-    private(set) var columns = defaultColumnsCount
+    @Published private var model: Model
+    private var settings = GameSettings()
     
     private static func createModel(_ columns: Int) -> Model {
         return Model(columns: columns)
     }
     
+    init() {
+        model = ViewModel.createModel(settings.columns)
+    }
+    
     // MARK: - Accessors
+    
+    var columns: Int {
+        settings.columns
+    }
     
     var letters: [Letter] {
         model.letters
@@ -36,13 +61,13 @@ class ViewModel: ObservableObject {
     // MARK: - Intents
     
     func createGame() {
-        model = ViewModel.createModel(columns)
+        model = ViewModel.createModel(settings.columns)
     }
     
     func increaseColumns() {
-        columns += 1
-        if columns > maxColumnsCount {
-            columns = maxColumnsCount
+        settings.columns += 1
+        if settings.columns > maxColumnsCount {
+            settings.columns = maxColumnsCount
             return
         }
         
@@ -50,9 +75,9 @@ class ViewModel: ObservableObject {
     }
     
     func descreaseColumns() {
-        columns -= 1
-        if columns < minColumnsCount {
-            columns = minColumnsCount
+        settings.columns -= 1
+        if settings.columns < minColumnsCount {
+            settings.columns = minColumnsCount
             return
         }
         
