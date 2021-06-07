@@ -28,7 +28,7 @@ struct ContentView: View {
             }
             if viewModel.isMatched {
                 FinalScreen(retryAction: viewModel.createGame)
-                    .transition(.scale.animation(Animation.easeInOut.delay(0.3)))
+                    .transition(.asymmetric(insertion: .scale.animation(Animation.easeInOut.delay(0.3)), removal: .scale))
                     .zIndex(1)
             }
             if isSettingsActive {
