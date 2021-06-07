@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct Header: View {
-    @ObservedObject private(set) var viewModel: ViewModel
+    var revealAction: () -> Void
+    var settingsAction: () -> Void
     
     var body: some View {
         HStack() {
             Button(action: {
                 withAnimation(Animation.easeInOut) {
-                    viewModel.revealLetter()
+                    revealAction()
                 }
             }) {
                 Image(systemName: "questionmark.diamond")
             }
             .font(Font.title)
-            .padding(20)
+            .padding(.horizontal, 20)
             
             Text("Find All Words")
                 .frame(maxWidth: .infinity)
@@ -29,13 +30,13 @@ struct Header: View {
             
             Button(action: {
                 withAnimation(Animation.easeInOut) {
-                    viewModel.createGame()
+                    settingsAction()
                 }
             }) {
-                Image(systemName: "arrow.triangle.2.circlepath")
+                Image(systemName: "gearshape")
             }
             .font(Font.title)
-            .padding(20)
+            .padding(.horizontal, 20)
         }
         .foregroundColor(.black)
     }

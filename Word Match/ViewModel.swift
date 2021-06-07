@@ -7,18 +7,19 @@
 
 import Foundation
 
+var defaultColumnsCount = 5
+var maxColumnsCount = 8
+var minColumnsCount = 5
+
 class ViewModel: ObservableObject {
-    @Published private var model: Model = createModel()
+    @Published private var model: Model = createModel(defaultColumnsCount)
+    private(set) var columns = defaultColumnsCount
     
-    private static func createModel() -> Model {
-        return Model(columns: 5)
+    private static func createModel(_ columns: Int) -> Model {
+        return Model(columns: columns)
     }
     
     // MARK: - Accessors
-    
-    var columns: Int {
-        model.columns
-    }
     
     var letters: [Letter] {
         model.letters
@@ -35,7 +36,27 @@ class ViewModel: ObservableObject {
     // MARK: - Intents
     
     func createGame() {
-        model = ViewModel.createModel()
+        model = ViewModel.createModel(columns)
+    }
+    
+    func increaseColumns() {
+        columns += 1
+        if columns > maxColumnsCount {
+            columns = maxColumnsCount
+            return
+        }
+        
+        createGame()
+    }
+    
+    func descreaseColumns() {
+        columns -= 1
+        if columns < minColumnsCount {
+            columns = minColumnsCount
+            return
+        }
+        
+        createGame()
     }
     
     func select(letter: Letter) {

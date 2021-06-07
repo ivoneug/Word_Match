@@ -9,15 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private(set) var viewModel: ViewModel
+    @State private var isSettingsActive = false
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.yellow
                 .opacity(0.3)
                 .ignoresSafeArea()
             VStack {
                 Spacer(minLength: topSpace)
-                Header(viewModel: viewModel)
+                Header(revealAction: viewModel.revealLetter, settingsAction: {
+                    isSettingsActive.toggle()
+                })
                 Spacer(minLength: space)
                 Tips(viewModel: viewModel)
                 Spacer(minLength: space)
@@ -25,6 +28,12 @@ struct ContentView: View {
             }
             if viewModel.isMatched {
                 FinalScreen(viewModel: viewModel)
+            }
+            if isSettingsActive {
+                Settings(gridSize: viewModel.columns, plusAction: viewModel.increaseColumns, minusAction: viewModel.descreaseColumns, restartAction: viewModel.createGame, doneAction: {
+                    isSettingsActive.toggle()
+                })
+                .zIndex(1)
             }
         }
     }
@@ -40,17 +49,8 @@ struct ContentView: View {
     
     private func renderGrid(size: CGSize) -> some View {
         let width = size.width
-        var height = size.width
-        var gridItemWidth = width / CGFloat(viewModel.columns + 1)
-        
-        let rowCount = Int(ceil(Double(viewModel.letters.count) / Double(viewModel.columns)))
-        if rowCount != viewModel.columns {
-            height = height / CGFloat(viewModel.columns) * CGFloat(rowCount)
-        }
-        if viewModel.letters.count <= (viewModel.columns + 1) {
-            height = width
-            gridItemWidth = width / CGFloat(viewModel.columns)
-        }
+        let height = size.width
+        let gridItemWidth = floor((width - CGFloat(viewModel.columns) * cardPadding) / CGFloat(viewModel.columns + 1))
         
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemWidth))], content: {
             ForEach(viewModel.letters) { letter in
