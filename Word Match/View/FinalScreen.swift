@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct FinalScreen: View {
-    @ObservedObject private(set) var viewModel: ViewModel
+    var retryAction: () -> Void
     
     var body: some View {
         ZStack {
             Color.white
-                .opacity(0.8)
+                .opacity(0.9)
                 .ignoresSafeArea()
             VStack {
                 Text("All Words are Matched!")
                     .font(Font.title.bold())
                 Button(action: {
                     withAnimation(Animation.easeInOut) {
-                        viewModel.createGame()
+                        retryAction()
                     }
                 }) {
                     Image(systemName: "arrow.triangle.2.circlepath")

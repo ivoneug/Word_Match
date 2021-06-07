@@ -18,7 +18,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer(minLength: topSpace)
-                Header(revealAction: viewModel.revealLetter, settingsAction: {
+                Header(revealAction: viewModel.revealResults, settingsAction: {
                     isSettingsActive.toggle()
                 })
                 Spacer(minLength: space)
@@ -27,7 +27,9 @@ struct ContentView: View {
                 renderGameField()
             }
             if viewModel.isMatched {
-                FinalScreen(viewModel: viewModel)
+                FinalScreen(retryAction: viewModel.createGame)
+                    .transition(.scale.animation(Animation.easeInOut.delay(0.3)))
+                    .zIndex(1)
             }
             if isSettingsActive {
                 Settings(gridSize: viewModel.columns, plusAction: viewModel.increaseColumns, minusAction: viewModel.descreaseColumns, restartAction: viewModel.createGame, doneAction: {

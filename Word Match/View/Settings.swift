@@ -8,8 +8,11 @@
 import SwiftUI
 
 extension AnyTransition {
-    static var slideVertical: AnyTransition {
+    static var slideVerticalTop: AnyTransition {
         AnyTransition.move(edge: .top)
+    }
+    static var slideVerticalBottom: AnyTransition {
+        AnyTransition.move(edge: .bottom)
     }
 }
 
@@ -84,7 +87,7 @@ struct Settings: View {
         .shadow(radius: 10)
         .ignoresSafeArea()
         .padding(.horizontal)
-        .transition(.slideVertical)
+        .transition(.slideVerticalTop)
     }
 }
 
