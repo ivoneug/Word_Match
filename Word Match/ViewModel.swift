@@ -7,27 +7,6 @@
 
 import Foundation
 
-let defaultColumnsCount = 5
-let maxColumnsCount = 8
-let minColumnsCount = 5
-
-struct GameSettings {
-    private static let kWordGridColumnsSize = "WordGridColumnsSize"
-    
-    var columns = defaultColumnsCount {
-        didSet {
-            UserDefaults.standard.setValue(columns, forKey: GameSettings.kWordGridColumnsSize)
-        }
-    }
-    
-    init() {
-        columns = UserDefaults.standard.integer(forKey: GameSettings.kWordGridColumnsSize)
-        if columns == 0 {
-            columns = defaultColumnsCount
-        }
-    }
-}
-
 class ViewModel: ObservableObject {
     @Published private var model: Model
     private var settings = GameSettings()
@@ -65,23 +44,15 @@ class ViewModel: ObservableObject {
     }
     
     func increaseColumns() {
-        settings.columns += 1
-        if settings.columns > maxColumnsCount {
-            settings.columns = maxColumnsCount
-            return
+        if settings.increaseColumns() {
+            createGame()
         }
-        
-        createGame()
     }
     
     func descreaseColumns() {
-        settings.columns -= 1
-        if settings.columns < minColumnsCount {
-            settings.columns = minColumnsCount
-            return
+        if settings.descreaseColumns() {
+            createGame()
         }
-        
-        createGame()
     }
     
     func select(letter: Letter) {

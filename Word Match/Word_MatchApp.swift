@@ -12,6 +12,9 @@ struct Word_MatchApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: ViewModel())
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification), perform: { _ in
+                    UserDefaults.standard.synchronize()
+                })
         }
     }
 }

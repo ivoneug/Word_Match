@@ -15,6 +15,9 @@
 		FD0BE554266CFF020088CD69 /* FinalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0BE553266CFF020088CD69 /* FinalScreen.swift */; };
 		FD507DBB266E6821005C9FA5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD507DBA266E6821005C9FA5 /* Settings.swift */; };
 		FD507DBF266E78CC005C9FA5 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD507DBE266E78CC005C9FA5 /* RoundedCorner.swift */; };
+		FD507DC1266F4076005C9FA5 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD507DC0266F4076005C9FA5 /* GameSettings.swift */; };
+		FD507DC4266F4098005C9FA5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD507DC3266F4098005C9FA5 /* Constants.swift */; };
+		FD507DC6266F40E4005C9FA5 /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD507DC5266F40E4005C9FA5 /* Words.swift */; };
 		FD97AE17263D4E48009DF436 /* Word_MatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */; };
 		FD97AE19263D4E48009DF436 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD97AE18263D4E48009DF436 /* ContentView.swift */; };
 		FD97AE1B263D4E4F009DF436 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD97AE1A263D4E4F009DF436 /* Assets.xcassets */; };
@@ -34,6 +37,9 @@
 		FD0BE553266CFF020088CD69 /* FinalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalScreen.swift; sourceTree = "<group>"; };
 		FD507DBA266E6821005C9FA5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FD507DBE266E78CC005C9FA5 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		FD507DC0266F4076005C9FA5 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		FD507DC3266F4098005C9FA5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FD507DC5266F40E4005C9FA5 /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		FD97AE13263D4E48009DF436 /* Word Match.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Match.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word_MatchApp.swift; sourceTree = "<group>"; };
 		FD97AE18263D4E48009DF436 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +69,9 @@
 				FD97AE33263D4F93009DF436 /* Model.swift */,
 				FD0BE54A266CF7BA0088CD69 /* Word.swift */,
 				FD0BE54C266CF7DF0088CD69 /* Letter.swift */,
+				FD507DC0266F4076005C9FA5 /* GameSettings.swift */,
+				FD507DC3266F4098005C9FA5 /* Constants.swift */,
+				FD507DC5266F40E4005C9FA5 /* Words.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,11 +216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD0BE550266CFDC10088CD69 /* Header.swift in Sources */,
+				FD507DC6266F40E4005C9FA5 /* Words.swift in Sources */,
 				FD0BE552266CFE8B0088CD69 /* Tips.swift in Sources */,
+				FD507DC1266F4076005C9FA5 /* GameSettings.swift in Sources */,
 				FD507DBB266E6821005C9FA5 /* Settings.swift in Sources */,
 				FD0BE548266A8BC40088CD69 /* LetterView.swift in Sources */,
 				FD0BE54B266CF7BA0088CD69 /* Word.swift in Sources */,
 				FD97AE34263D4F93009DF436 /* Model.swift in Sources */,
+				FD507DC4266F4098005C9FA5 /* Constants.swift in Sources */,
 				FD0BE54D266CF7DF0088CD69 /* Letter.swift in Sources */,
 				FD97AE31263D4F2B009DF436 /* Pie.swift in Sources */,
 				FD97AE30263D4F2B009DF436 /* Array+Extensions.swift in Sources */,
