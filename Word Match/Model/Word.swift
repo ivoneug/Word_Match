@@ -37,7 +37,7 @@ func loadWords() {
                 }
             }
         } catch {
-            
+            isWordsLoaded = false
         }
     }
 }

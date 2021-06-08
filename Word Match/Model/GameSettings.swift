@@ -8,17 +8,17 @@
 import Foundation
 
 struct GameSettings {
-    private static let kWordGridColumnsSize = "WordGridColumnsSize"
+    private static let wordGridColumnsSize = "WordGridColumnsSize"
     
     private(set) var columns = defaultColumnsCount {
         didSet {
-            UserDefaults.standard.set(columns, forKey: GameSettings.kWordGridColumnsSize)
+            UserDefaults.standard.set(columns, forKey: GameSettings.wordGridColumnsSize)
             UserDefaults.standard.synchronize()
         }
     }
     
     init() {
-        columns = UserDefaults.standard.integer(forKey: GameSettings.kWordGridColumnsSize)
+        columns = UserDefaults.standard.integer(forKey: GameSettings.wordGridColumnsSize)
         if columns == 0 {
             columns = defaultColumnsCount
         }
