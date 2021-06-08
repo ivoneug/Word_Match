@@ -18,7 +18,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer(minLength: topSpace)
-                Header(revealAction: viewModel.revealResults, settingsAction: {
+                Header(revealAction: viewModel.revealLetter, settingsAction: {
                     isSettingsActive.toggle()
                 })
                 Spacer(minLength: space)

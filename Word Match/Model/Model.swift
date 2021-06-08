@@ -46,6 +46,8 @@ struct Model {
     }
     
     init(columns: Int) {
+        loadWords()
+        
         self.columns = columns
         self.rows = columns
         self.words.append(contentsOf: wordList)
