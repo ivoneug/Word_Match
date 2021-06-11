@@ -1,4 +1,4 @@
-# Word Match Searching
+# Word Match Searching
 ![Word Match Searching screenshots](https://github.com/ivoneug/Word_Match/blob/main/StoreInfo/LinkedIn%20Project.png)
 Links to the game:
 - AppStore: https://apps.apple.com/us/app/word-match-searching/id1571894190
