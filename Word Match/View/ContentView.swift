@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject private(set) var viewModel: ViewModel
     @State private var isSettingsActive = false
-    
+
     var body: some View {
         ZStack(alignment: .top) {
             Color.yellow

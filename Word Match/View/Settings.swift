@@ -7,88 +7,111 @@
 
 import SwiftUI
 
-extension AnyTransition {
-    static var slideVerticalTop: AnyTransition {
-        AnyTransition.move(edge: .top)
-    }
-    static var slideVerticalBottom: AnyTransition {
-        AnyTransition.move(edge: .bottom)
-    }
-}
-
 struct Settings: View {
+
+    // MARK: - Properties
     var gridSize: Int
     var plusAction: () -> Void
     var minusAction: () -> Void
     var restartAction: () -> Void
     var doneAction: () -> Void
-    
     private let cornerRadius: CGFloat = 15
     private let rowSpacerHeight: CGFloat = 25
     private let buttonPadding: CGFloat = 20
-    
+    @State private var panelVisible: Bool = false
+
+    // MARK: - Layout
     var body: some View {
-        VStack(alignment: .leading, spacing: nil) {
-            Spacer(minLength: 44)
-            VStack(alignment: .leading, spacing: nil) {
-                HStack {
-                    Button(action: {
-                        withAnimation(Animation.easeInOut) {
-                            minusAction()
-                        }
-                    }) {
-                        Image(systemName: "minus.circle")
-                    }
-                    .padding(.horizontal, buttonPadding)
-                    .font(.title)
-                    
-                    Text("Grid: \(gridSize)x\(gridSize)")
-                    
-                    Button(action: {
-                        withAnimation(Animation.easeInOut) {
-                            plusAction()
-                        }
-                    }) {
-                        Image(systemName: "plus.circle")
-                    }
-                    .padding(.horizontal, buttonPadding)
-                    .font(.title)
+        ZStack(alignment: .top) {
+            Color.black
+                .opacity(0.3)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    saveChanges()
                 }
-                Spacer(minLength: rowSpacerHeight)
-                HStack {
-                    Button(action: {
-                        withAnimation(Animation.easeInOut) {
-                            restartAction()
+
+            if panelVisible {
+                VStack(alignment: .leading, spacing: nil) {
+                    Spacer(minLength: 44)
+                    VStack(alignment: .leading, spacing: nil) {
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    minusAction()
+                                }
+                            }) {
+                                Image(systemName: "minus.circle")
+                            }
+                            .padding(.horizontal, buttonPadding)
+                            .font(.title)
+
+                            Text("Grid: \(gridSize)x\(gridSize)")
+
+                            Button(action: {
+                                withAnimation {
+                                    plusAction()
+                                }
+                            }) {
+                                Image(systemName: "plus.circle")
+                            }
+                            .padding(.horizontal, buttonPadding)
+                            .font(.title)
                         }
-                    }) {
-                        Image(systemName: "arrow.triangle.2.circlepath")
+                        Spacer(minLength: rowSpacerHeight)
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    restartAction()
+                                }
+                            }) {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                            }
+                            .padding(.horizontal, buttonPadding)
+                            .font(.title)
+                            Text("Restart Game")
+                        }
                     }
-                    .padding(.horizontal, buttonPadding)
-                    .font(.title)
-                    Text("Restart Game")
+                    .frame(maxWidth: .infinity)
+                    Spacer(minLength: rowSpacerHeight)
+                    Button(action: saveChanges, label: {
+                        Text("Done")
+                    })
                 }
+                .font(Font.title2)
+                .foregroundColor(.black)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: 220)
+                .background(Color.white)
+                .cornerRadius(cornerRadius, corners: [.bottomLeft, .bottomRight])
+                .shadow(radius: 10)
+                .ignoresSafeArea()
+                .padding(.horizontal)
+                .transition(Constants.slideVerticalTop)
+                .zIndex(1)
             }
-            .frame(maxWidth: .infinity)
-            Spacer(minLength: rowSpacerHeight)
-            Button(action: {
-                withAnimation(Animation.easeInOut) {
-                    doneAction()
-                }
-            }, label: {
-                Text("Done")
-            })
         }
-        .font(Font.title2)
-        .foregroundColor(.black)
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: 220)
-        .background(Color.white)
-        .cornerRadius(cornerRadius, corners: [.bottomLeft, .bottomRight])
-        .shadow(radius: 10)
-        .ignoresSafeArea()
-        .padding(.horizontal)
-        .transition(.slideVerticalTop)
+        .onAppear {
+            showPanel()
+        }
     }
+
+    private func showPanel() {
+        withAnimation {
+            panelVisible = true
+        }
+    }
+
+    private func saveChanges() {
+        withAnimation {
+            panelVisible = false
+            doneAction()
+        }
+    }
+
+}
+
+private enum Constants {
+    static let slideVerticalTop = AnyTransition.move(edge: .top).combined(with: .opacity)
 }
 
 struct Settings_Previews: PreviewProvider {

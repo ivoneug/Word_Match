@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,7 +39,7 @@
 		FD507DBE266E78CC005C9FA5 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		FD507DC0266F4076005C9FA5 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		FD507DC3266F4098005C9FA5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		FD97AE13263D4E48009DF436 /* Word Match.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Match.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD97AE13263D4E48009DF436 /* Word Match Searching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Match Searching.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word_MatchApp.swift; sourceTree = "<group>"; };
 		FD97AE18263D4E48009DF436 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FD97AE1A263D4E4F009DF436 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,7 +71,6 @@
 				FD0BE54C266CF7DF0088CD69 /* Letter.swift */,
 				FD507DC0266F4076005C9FA5 /* GameSettings.swift */,
 				FD507DC3266F4098005C9FA5 /* Constants.swift */,
-				FD9E687D26732A7500476E6F /* words.json */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -85,8 +84,28 @@
 				FD0BE551266CFE8B0088CD69 /* Tips.swift */,
 				FD0BE553266CFF020088CD69 /* FinalScreen.swift */,
 				FD507DBA266E6821005C9FA5 /* Settings.swift */,
+				FD97AE2E263D4F2B009DF436 /* Shapes */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FD7D1BF52F2CD4CA00922FE6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FD9E687D26732A7500476E6F /* words.json */,
+				FD97AE1A263D4E4F009DF436 /* Assets.xcassets */,
+				FD97AE1F263D4E4F009DF436 /* Info.plist */,
+				FD97AE1C263D4E4F009DF436 /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FD7D1BF62F2CD4FE00922FE6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FD97AE36263D4FA5009DF436 /* ViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FD97AE0A263D4E48009DF436 = {
@@ -100,7 +119,7 @@
 		FD97AE14263D4E48009DF436 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD97AE13263D4E48009DF436 /* Word Match.app */,
+				FD97AE13263D4E48009DF436 /* Word Match Searching.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,15 +127,12 @@
 		FD97AE15263D4E48009DF436 /* Word Match */ = {
 			isa = PBXGroup;
 			children = (
+				FD97AE2C263D4F2B009DF436 /* Extensions */,
+				FD7D1BF62F2CD4FE00922FE6 /* ViewModel */,
 				FD0BE54E266CFDA70088CD69 /* View */,
 				FD0BE549266CF7A80088CD69 /* Model */,
-				FD97AE2C263D4F2B009DF436 /* Extensions */,
-				FD97AE2E263D4F2B009DF436 /* Shapes */,
+				FD7D1BF52F2CD4CA00922FE6 /* Resources */,
 				FD97AE16263D4E48009DF436 /* Word_MatchApp.swift */,
-				FD97AE36263D4FA5009DF436 /* ViewModel.swift */,
-				FD97AE1A263D4E4F009DF436 /* Assets.xcassets */,
-				FD97AE1F263D4E4F009DF436 /* Info.plist */,
-				FD97AE1C263D4E4F009DF436 /* Preview Content */,
 			);
 			path = "Word Match";
 			sourceTree = "<group>";
@@ -163,7 +179,7 @@
 			);
 			name = "Word Match";
 			productName = "Word Match";
-			productReference = FD97AE13263D4E48009DF436 /* Word Match.app */;
+			productReference = FD97AE13263D4E48009DF436 /* Word Match Searching.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,8 +188,9 @@
 		FD97AE0B263D4E48009DF436 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1230;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					FD97AE12263D4E48009DF436 = {
 						CreatedOnToolsVersion = 12.3;
@@ -273,8 +290,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QT27G5NN83;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -294,6 +313,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -334,8 +354,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = QT27G5NN83;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -348,6 +370,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -360,17 +383,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Word Match/Preview Content\"";
-				DEVELOPMENT_TEAM = QT27G5NN83;
+				DEVELOPMENT_ASSET_PATHS = "\"Word Match/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Word Match/Info.plist";
+				INFOPLIST_FILE = "Word Match/Resources/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Word Match Searching";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.IvonGames.Word-Match";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Word Match Searching";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -382,17 +406,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Word Match/Preview Content\"";
-				DEVELOPMENT_TEAM = QT27G5NN83;
+				DEVELOPMENT_ASSET_PATHS = "\"Word Match/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Word Match/Info.plist";
+				INFOPLIST_FILE = "Word Match/Resources/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Word Match Searching";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.word-games";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.IvonGames.Word-Match";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Word Match Searching";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
